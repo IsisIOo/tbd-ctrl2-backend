@@ -91,4 +91,12 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
             return false;
         }
     }
+
+    public UsuarioEntity getUsuarioId(String username) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM users WHERE username = :username")
+                    .addParameter("username",username)
+                    .executeAndFetchFirst(UsuarioEntity.class);
+        }
+    }
 }
