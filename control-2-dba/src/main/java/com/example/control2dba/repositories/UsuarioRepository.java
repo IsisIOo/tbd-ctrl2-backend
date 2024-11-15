@@ -16,12 +16,13 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
 
     // Guarda un cliente usando sql2o
     public UsuarioEntity saveUsuario(UsuarioEntity usuario) {
-        String sql = "INSERT INTO cliente (nombre, direccion, email, telefono) VALUES (:nombre, :direccion, :email, :telefono)";
+        String sql = "INSERT INTO cliente (nombre, email, contrasena) VALUES (:nombre, :email, :contrasena)";
         try (Connection con = sql2o.open()) {
             // Insertar el cliente en la base de datos
-            Integer id = (Integer) con.createQuery(sql, true)  // true indica que se quiere obtener el ID generado
+            Integer id = (Integer) con.createQuery(sql, true) // true indica que se quiere obtener el ID generado
                     .addParameter("nombre", usuario.getNombre())
                     .addParameter("email", usuario.getEmail())
+                    .addParameter("contrasena", usuario.getContrasena())
                     .executeUpdate()
                     .getKey(); // Obtener el ID generado
 
@@ -95,7 +96,7 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
     public UsuarioEntity getUsuarioId(String username) {
         try (org.sql2o.Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM users WHERE username = :username")
-                    .addParameter("username",username)
+                    .addParameter("username", username)
                     .executeAndFetchFirst(UsuarioEntity.class);
         }
     }
