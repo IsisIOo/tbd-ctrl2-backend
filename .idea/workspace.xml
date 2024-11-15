@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b91fcd0-ca41-454c-98e8-3d5fb99371d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/controllers/NotaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/controllers/NotaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/NotaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/NotaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/NotaRepositoryInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/NotaRepositoryInt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/UsuarioRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/repositories/UsuarioRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/services/NotaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/control-2-dba/src/main/java/com/example/control2dba/services/NotaService.java" afterDir="false" />
-    </list>
+    <list default="true" id="2b91fcd0-ca41-454c-98e8-3d5fb99371d4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,7 +47,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1731682536434</updated>
-      <workItem from="1731682537548" duration="579000" />
+      <workItem from="1731682537548" duration="1207000" />
     </task>
     <servers />
   </component>
