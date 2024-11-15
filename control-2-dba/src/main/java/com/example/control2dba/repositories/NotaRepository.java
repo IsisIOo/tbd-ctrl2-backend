@@ -14,12 +14,16 @@ public class NotaRepository implements NotaRepositoryInt {
     @Autowired
     private Sql2o sql2o;
 
-    public NotaEntity saveNota(NotaEntity nota) {
-        String sql = "INSERT INTO nota (nombre) VALUES (:nombre)";
+    public NotaEntity saveNota(NotaEntity nota, Integer id_usuario) { // Cambiar Long a int
+        String sql = "INSERT INTO nota (nombre, id_usuario, contenido, fecha, completa_check) VALUES (:nombre, :id_usuario, :contenido, :fecha, :completa_check)";
         try (Connection con = sql2o.open()) {
             // Cambiar Long a Integer
             Integer id = (Integer) con.createQuery(sql, true)
                     .addParameter("nombre", nota.getNombre_notas())
+                    .addParameter("id_usuario", id_usuario) // Cambiar Long a int
+                    .addParameter("contenido", nota.getContenido())
+                    .addParameter("fecha", nota.getFecha())
+                    .addParameter("completa_check", nota.getCompleta_check())
                     .executeUpdate()
                     .getKey();
 
@@ -43,13 +47,24 @@ public class NotaRepository implements NotaRepositoryInt {
         }
     }
 
-
     public NotaEntity findByIdNota(Integer id) { // Cambiar Long a int
         String sql = "SELECT * FROM notas WHERE id_nota = :id";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sql)
                     .addParameter("id", id)
                     .executeAndFetchFirst(NotaEntity.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<NotaEntity> findByIdUsuario(Integer id_usuario) {
+        String sql = "SELECT * FROM notas WHERE id_usuario = :id_usuario";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("id_usuario", id_usuario)
+                    .executeAndFetch(NotaEntity.class);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

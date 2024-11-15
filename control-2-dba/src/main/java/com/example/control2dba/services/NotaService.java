@@ -13,18 +13,23 @@ public class NotaService {
     @Autowired
     NotaRepository notaRepository;
 
-    public NotaEntity saveNota(NotaEntity nota){
-        return notaRepository.saveNota(nota);
+    public NotaEntity saveNota(NotaEntity nota, Integer id_usuario) {
+        return notaRepository.saveNota(nota, id_usuario);
     }
 
-    public ArrayList<NotaEntity> getNotas(){
+    public ArrayList<NotaEntity> getNotas() {
         return (ArrayList<NotaEntity>) notaRepository.getNotas();
+    }
+
+    public List<NotaEntity> findByIdUsuario(Integer id) {
+        return notaRepository.findByIdUsuario(id);
     }
 
     public NotaEntity getNotaById(int id) {
         return notaRepository.findByIdNota(id);
-    }  
-     public List<NotaEntity> getAllNotas() {
+    }
+
+    public List<NotaEntity> getAllNotas() {
         return notaRepository.getNotas();
     }
 
@@ -38,13 +43,12 @@ public class NotaService {
     }
 
     public boolean deleteNota(int id) throws Exception {
-        try{
+        try {
             notaRepository.deleteNota(id);
             return true;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
-
 
 }
