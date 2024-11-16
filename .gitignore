@@ -1,0 +1,7 @@
+.dockerignore
+docker-compose.yml
+Dockerfile
+data/
+servers.json/
+# intelij
+.idea/

@@ -17,9 +17,9 @@ public class NotaController {
     private NotaService notaService;
 
     // crea un usuario
-    @PostMapping("/")
-    public ResponseEntity<NotaEntity> saveNota(@RequestBody NotaEntity nota) {
-        NotaEntity NewNota = notaService.saveNota(nota);
+    @PostMapping("/{idUsuario}")
+    public ResponseEntity<NotaEntity> saveNota(@RequestBody NotaEntity nota, @PathVariable Integer idUsuario) {
+        NotaEntity NewNota = notaService.saveNota(nota, idUsuario);
         return ResponseEntity.ok(NewNota);
     }
 
