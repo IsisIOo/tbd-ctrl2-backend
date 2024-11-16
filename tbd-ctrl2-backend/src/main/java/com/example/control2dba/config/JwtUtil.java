@@ -28,6 +28,16 @@ public class JwtUtil {
 
     }
 
+    public String createRefresh(String username) {
+        return JWT.create()
+                .withSubject(username)
+                .withIssuer("tbd")
+                .withIssuedAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(14)) // Modifica este valor para cambiar la duración del token
+                ).sign(ALGORITHM);
+
+    }
+
     // Este método verifica si un JWT es válido
     public boolean isValid(String jwt){
         try {
