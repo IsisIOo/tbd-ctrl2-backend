@@ -16,10 +16,10 @@ public class NotaController {
     @Autowired
     private NotaService notaService;
 
-    // crea un usuario
-    @PostMapping("/")
-    public ResponseEntity<NotaEntity> saveNota(@RequestBody NotaEntity nota) {
-        NotaEntity NewNota = notaService.saveNota(nota);
+    // crea un notas
+    @PostMapping("/${id_usuario}")
+    public ResponseEntity<NotaEntity> saveNota(@RequestBody NotaEntity nota, @PathVariable Integer id_usuario) {
+        NotaEntity NewNota = notaService.saveNota(nota, id_usuario);
         return ResponseEntity.ok(NewNota);
     }
 
@@ -64,4 +64,3 @@ public class NotaController {
         }
     }
 }
-
