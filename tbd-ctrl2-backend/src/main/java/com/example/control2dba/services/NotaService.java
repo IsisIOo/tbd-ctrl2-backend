@@ -12,9 +12,15 @@ import java.util.List;
 public class NotaService {
     @Autowired
     NotaRepository notaRepository;
+    @Autowired
+    private UsuarioService usuarioService;
 
-    public NotaEntity saveNota(NotaEntity nota, Integer id_usuario) {
-        return notaRepository.saveNota(nota, id_usuario);
+    public NotaEntity saveNota(NotaEntity nota) {
+        if (usuarioService.getUsuarioById(nota.getId_usuario()) == null) {
+            return null;
+        }
+
+        return notaRepository.saveNota(nota);
     }
 
     public ArrayList<NotaEntity> getNotas() {
@@ -44,8 +50,11 @@ public class NotaService {
 
     public boolean deleteNota(int id) throws Exception {
         try {
-            notaRepository.deleteNota(id);
-            return true;
+            Boolean response = notaRepository.deleteNota(id);
+            if (response) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

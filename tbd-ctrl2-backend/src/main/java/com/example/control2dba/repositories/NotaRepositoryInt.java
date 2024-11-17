@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NotaRepositoryInt {
     // Método para guardar una nota
-    NotaEntity saveNota(NotaEntity nota, Integer id_usuario);
+    NotaEntity saveNota(NotaEntity nota);
 
     // Método para obtener todas las categorías
     List<NotaEntity> getNotas();

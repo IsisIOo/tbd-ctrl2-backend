@@ -31,6 +31,8 @@ public class SecurityConfig {
                         .requestMatchers("/establecimientos/").hasAnyRole("MOD") // Solo los ADMIN pueden acceder a /establecimientos/**
                         .requestMatchers("/establecimientos/**").hasAnyRole("ADMIN") // Solo los ADMIN pueden acceder a /establecimientos/**
                         .requestMatchers("/auth/**").permitAll() // Todos pueden acceder a /auth/**
+                        .requestMatchers("/api/usuario/**").permitAll() // Todos pueden acceder a /auth/**
+                        .requestMatchers("/api/nota/**").permitAll() // Todos pueden acceder a /auth/**
                         .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .sessionManagement(session -> session // Configura la política de creación de sesiones
@@ -39,14 +41,4 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // Agrega el filtro de JWT antes del filtro de autenticación
         return http.build();
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    } // Configura el encriptador de contraseñas
 }

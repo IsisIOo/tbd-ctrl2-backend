@@ -2,6 +2,9 @@ package com.example.control2dba.entities;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
+
 @Data
 public class NotaEntity {
 
@@ -9,12 +12,12 @@ public class NotaEntity {
 
     private Integer id_usuario;
 
-    private String nombre_notas;
+    private String nombre_nota;
 
-    private String contenido;
+    private String contenido_nota;
 
-    private String fecha;
+    private LocalDate fecha_nota;
 
-    private Boolean completa_check;
+    private Boolean completa_check_nota;
 
 }

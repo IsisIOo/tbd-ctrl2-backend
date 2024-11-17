@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class UsuarioEntity {
 
-    private Integer id_cliente;
+    private Integer id_usuario;
 
     private String nombre;
 

@@ -26,18 +26,14 @@ public class UsuarioService {
         return usuario;
     }
 
-    public UsuarioEntity saveUsuario(UsuarioEntity cliente) {
-        return usuarioRepository.saveUsuario(cliente);
-    }
-
-    public ArrayList<UsuarioEntity> getUsuarios() {
-        return (ArrayList<UsuarioEntity>) usuarioRepository.getUsuarios();
-    }
-
     public boolean deleteUsuario(Integer id) throws Exception {
         try {
-            usuarioRepository.deleteUsuario(id);
-            return true;
+            Boolean response = usuarioRepository.deleteUsuario(id);
+            if (response) {
+                return true;
+            } else {
+                throw new Exception("No se pudo eliminar el usuario");
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -45,7 +41,7 @@ public class UsuarioService {
 
     public boolean updateUsuario(UsuarioEntity usuario) {
         // vemos si el cliente existe en la base de datos
-        if (usuarioRepository.getUsuarioById(usuario.getId_cliente()) != null) {
+        if (usuarioRepository.getUsuarioById(usuario.getId_usuario()) != null) {
             // actualizamos el cliente usando el método del repositorio
             return usuarioRepository.updateUsuario(usuario);
         }
