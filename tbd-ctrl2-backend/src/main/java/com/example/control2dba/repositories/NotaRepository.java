@@ -37,7 +37,7 @@ public class NotaRepository implements NotaRepositoryInt {
     }
 
     public List<NotaEntity> getNotas() {
-        String sql = "SELECT * FROM categoria";
+        String sql = "SELECT * FROM nota";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sql)
                     .executeAndFetch(NotaEntity.class);
@@ -48,7 +48,7 @@ public class NotaRepository implements NotaRepositoryInt {
     }
 
     public NotaEntity findByIdNota(Integer id) { // Cambiar Long a int
-        String sql = "SELECT * FROM notas WHERE id_nota = :id";
+        String sql = "SELECT * FROM nota WHERE id_nota = :id";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sql)
                     .addParameter("id", id)
@@ -60,7 +60,7 @@ public class NotaRepository implements NotaRepositoryInt {
     }
 
     public List<NotaEntity> findByIdUsuario(Integer id_usuario) {
-        String sql = "SELECT * FROM notas WHERE id_usuario = :id_usuario";
+        String sql = "SELECT * FROM nota WHERE id_usuario = :id_usuario";
         try (Connection con = sql2o.open()) {
             return con.createQuery(sql)
                     .addParameter("id_usuario", id_usuario)
@@ -86,7 +86,7 @@ public class NotaRepository implements NotaRepositoryInt {
     }
 
     public boolean updateNota(NotaEntity nota) {
-        String sql = "UPDATE categoria SET nombre = :nombre WHERE id_categoria = :id";
+        String sql = "UPDATE nota SET nombre = :nombre WHERE id_nota = :id";
         try (Connection con = sql2o.open()) {
             int affectedRows = con.createQuery(sql)
                     .addParameter("nombre", nota.getNombre_notas())
