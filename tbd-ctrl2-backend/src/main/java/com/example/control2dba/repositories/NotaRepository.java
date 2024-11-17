@@ -14,16 +14,16 @@ public class NotaRepository implements NotaRepositoryInt {
     @Autowired
     private Sql2o sql2o;
 
-    public NotaEntity saveNota(NotaEntity nota, Integer id_usuario) { // Cambiar Long a int
-        String sql = "INSERT INTO nota (nombre, id_usuario, contenido, fecha, completa_check) VALUES (:nombre, :id_usuario, :contenido, :fecha, :completa_check)";
+    public NotaEntity saveNota(NotaEntity nota) { // Cambiar Long a int
+        String sql = "INSERT INTO nota (nombre_nota, id_usuario, contenido_nota, fecha_nota, completa_check_nota) VALUES (:nombre, :id_usuario, :contenido, :fecha, :completa_check)";
         try (Connection con = sql2o.open()) {
             // Cambiar Long a Integer
             Integer id = (Integer) con.createQuery(sql, true)
-                    .addParameter("nombre", nota.getNombre_notas())
-                    .addParameter("id_usuario", id_usuario) // Cambiar Long a int
-                    .addParameter("contenido", nota.getContenido())
-                    .addParameter("fecha", nota.getFecha())
-                    .addParameter("completa_check", nota.getCompleta_check())
+                    .addParameter("nombre", nota.getNombre_nota())
+                    .addParameter("id_usuario", nota.getId_usuario()) // Cambiar Long a int
+                    .addParameter("contenido", nota.getContenido_nota())
+                    .addParameter("fecha", nota.getFecha_nota())
+                    .addParameter("completa_check", nota.getCompleta_check_nota())
                     .executeUpdate()
                     .getKey();
 
@@ -86,11 +86,15 @@ public class NotaRepository implements NotaRepositoryInt {
     }
 
     public boolean updateNota(NotaEntity nota) {
-        String sql = "UPDATE nota SET nombre = :nombre WHERE id_nota = :id";
+        String sql = "UPDATE nota SET nombre_nota = :nombre, contenido_nota = :contenido, fecha_nota = :fecha, completa_check_nota =:check " +
+                "WHERE id_nota = :id";
         try (Connection con = sql2o.open()) {
             int affectedRows = con.createQuery(sql)
-                    .addParameter("nombre", nota.getNombre_notas())
+                    .addParameter("nombre", nota.getNombre_nota())
                     .addParameter("id", nota.getId_nota()) // idCategoria ahora es un int en la entidad
+                    .addParameter("contenido", nota.getContenido_nota())
+                    .addParameter("fecha", nota.getFecha_nota())
+                    .addParameter("check", nota.getCompleta_check_nota())
                     .executeUpdate()
                     .getResult();
             return affectedRows > 0;

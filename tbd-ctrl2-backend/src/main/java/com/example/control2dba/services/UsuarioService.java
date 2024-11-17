@@ -26,14 +26,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    public UsuarioEntity saveUsuario(UsuarioEntity cliente) {
-        return usuarioRepository.saveUsuario(cliente);
-    }
-
-    public ArrayList<UsuarioEntity> getUsuarios() {
-        return (ArrayList<UsuarioEntity>) usuarioRepository.getUsuarios();
-    }
-
     public boolean deleteUsuario(Integer id) throws Exception {
         try {
             Boolean response = usuarioRepository.deleteUsuario(id);
