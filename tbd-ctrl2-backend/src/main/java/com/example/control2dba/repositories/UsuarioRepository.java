@@ -1,6 +1,7 @@
 package com.example.control2dba.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -95,8 +96,16 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
 
     public UsuarioEntity getUsuarioId(String username) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM users WHERE username = :username")
+            return con.createQuery("SELECT * FROM usuario WHERE username = :username")
                     .addParameter("username", username)
+                    .executeAndFetchFirst(UsuarioEntity.class);
+        }
+    }
+
+    public UsuarioEntity getUsuarioEmail(String username) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM usuario WHERE email = :email")
+                    .addParameter("email", username)
                     .executeAndFetchFirst(UsuarioEntity.class);
         }
     }

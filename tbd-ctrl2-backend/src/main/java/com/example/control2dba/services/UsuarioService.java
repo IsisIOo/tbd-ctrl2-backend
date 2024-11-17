@@ -1,6 +1,8 @@
 package com.example.control2dba.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.control2dba.entities.UsuarioEntity;
 import com.example.control2dba.repositories.UsuarioRepository;
@@ -9,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UsuarioEntity createUsuario(UsuarioEntity usuario) {
+        String encodedPassword = passwordEncoder.encode(usuario.getContrasena());
+        usuario.setContrasena(encodedPassword);
         return usuarioRepository.saveUsuario(usuario);
     }
 

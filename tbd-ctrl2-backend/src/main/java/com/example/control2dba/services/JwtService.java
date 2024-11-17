@@ -1,41 +1,41 @@
-package com.example.control2dba.config;
+package com.example.control2dba.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-@Configuration
-public class JwtUtil {
+@Service
+public class JwtService {
 
     // Este es el código secreto que está en la fase de firma del JWT
     // En un ambiente de producción, este valor debe ser guardado en un lugar seguro
     private static String SECRET = "yo";
     private static Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
+    private static Long JWT_EXPIRATION = TimeUnit.MINUTES.toMillis(5); // Modifica este valor para cambiar la duración del token
+    private static Long JWT_REFRESH_EXPIRATION = TimeUnit.DAYS.toMillis(15); // Modifica este valor para cambiar la duración del token
 
-    // Este método crea un JWT con el nombre de usuario
-    public String create(String username) {
-        return JWT.create()
-                .withSubject(username)
-                .withIssuer("tbd")
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)) // Modifica este valor para cambiar la duración del token
-                ).sign(ALGORITHM);
 
+    public String generateToken(String username) {
+        return create(username, JWT_EXPIRATION);
     }
 
-    public String createRefresh(String username) {
-        return JWT.create()
-                .withSubject(username)
-                .withIssuer("tbd")
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(14)) // Modifica este valor para cambiar la duración del token
-                ).sign(ALGORITHM);
+    public String generateRefreshToken(String username) {
+        return create(username, JWT_REFRESH_EXPIRATION);
+    }
 
+    // Este método crea un JWT con el nombre de usuario
+    public String create(String username, Long expiration) {
+        return JWT.create()
+                .withIssuer(username)
+                .withClaim("username", username)
+                .withSubject(username)
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + expiration)) // Modifica este valor para cambiar la duración del token
+                .sign(ALGORITHM);
     }
 
     // Este método verifica si un JWT es válido

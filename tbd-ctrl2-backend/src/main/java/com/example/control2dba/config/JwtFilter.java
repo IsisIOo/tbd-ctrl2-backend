@@ -1,9 +1,11 @@
 package com.example.control2dba.config;
 
+import com.example.control2dba.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,17 +19,12 @@ import java.io.IOException;
 import org.springframework.http.HttpHeaders;
 
 @Component
+@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtUtil;
     private final UserDetailsService userDetailsService;
 
-    @Autowired
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-    }
 
-    
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -40,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // 2. Validar que el token sea válido
-        String jwt = authHeader.split(" ")[1].trim();
+        String jwt = authHeader.substring(7);
 
         if (!this.jwtUtil.isValid(jwt)) {
             filterChain.doFilter(request, response);
@@ -57,7 +54,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        System.out.println(authenticationToken);
         filterChain.doFilter(request, response);
     }
 }
