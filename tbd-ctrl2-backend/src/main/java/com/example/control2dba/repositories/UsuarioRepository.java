@@ -1,6 +1,7 @@
 package com.example.control2dba.repositories;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -16,7 +17,7 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
 
     // Guarda un cliente usando sql2o
     public UsuarioEntity saveUsuario(UsuarioEntity usuario) {
-        String sql = "INSERT INTO cliente (nombre, email, contrasena) VALUES (:nombre, :email, :contrasena)";
+        String sql = "INSERT INTO usuario (nombre, email, contrasena) VALUES (:nombre, :email, :contrasena)";
         try (Connection con = sql2o.open()) {
             // Insertar el cliente en la base de datos
             Integer id = (Integer) con.createQuery(sql, true) // true indica que se quiere obtener el ID generado
@@ -27,7 +28,7 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
                     .getKey(); // Obtener el ID generado
 
             // Establecer el ID generado al cliente
-            usuario.setId_cliente(id);
+            usuario.setId_usuario(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,12 +78,12 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
 
     // Actualiza un cliente existente
     public boolean updateUsuario(UsuarioEntity usuario) {
-        String sql = "UPDATE usuario SET nombre = :nombre, direccion = :direccion, email = :email, telefono = :telefono WHERE id_cliente = :id";
+        String sql = "UPDATE usuario SET nombre = :nombre, email = :email WHERE id_usuario = :id";
         try (Connection con = sql2o.open()) {
             int affectedRows = con.createQuery(sql)
                     .addParameter("nombre", usuario.getNombre())
                     .addParameter("email", usuario.getEmail())
-                    .addParameter("id", usuario.getId_cliente())
+                    .addParameter("id", usuario.getId_usuario())
                     .executeUpdate()
                     .getResult(); // Obtener el número de filas afectadas
 
@@ -95,8 +96,16 @@ public class UsuarioRepository implements UsuarioRepositoryInt {
 
     public UsuarioEntity getUsuarioId(String username) {
         try (org.sql2o.Connection con = sql2o.open()) {
-            return con.createQuery("SELECT * FROM users WHERE username = :username")
+            return con.createQuery("SELECT * FROM usuario WHERE username = :username")
                     .addParameter("username", username)
+                    .executeAndFetchFirst(UsuarioEntity.class);
+        }
+    }
+
+    public UsuarioEntity getUsuarioEmail(String username) {
+        try (org.sql2o.Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM usuario WHERE email = :email")
+                    .addParameter("email", username)
                     .executeAndFetchFirst(UsuarioEntity.class);
         }
     }
