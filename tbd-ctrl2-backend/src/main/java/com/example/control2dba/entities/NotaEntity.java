@@ -16,7 +16,7 @@ public class NotaEntity {
 
     private String contenido_nota;
 
-    private LocalDate fecha_nota;
+    private LocalDate fecha_nota; //Fecha de vencimiento
 
     private Boolean completa_check_nota;
 
