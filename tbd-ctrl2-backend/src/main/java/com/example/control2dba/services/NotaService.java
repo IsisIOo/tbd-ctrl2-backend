@@ -60,4 +60,9 @@ public class NotaService {
         }
     }
 
+    public List<NotaEntity> buscarTareas(Boolean check, String nombre, String contenido, Integer id_usuario) {
+        System.out.println("check: " + check);
+        return notaRepository.buscarPorFiltros(check, nombre, contenido, id_usuario);
+    }
+
 }

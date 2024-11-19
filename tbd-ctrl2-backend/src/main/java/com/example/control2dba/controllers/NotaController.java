@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/nota")
@@ -91,6 +92,34 @@ public class NotaController {
     public ResponseEntity<List<NotaEntity>> getNotasByCliente(@PathVariable Integer id) {
         try {
             List<NotaEntity> notas = notaService.findByIdUsuario(id);
+            return ResponseEntity.ok(notas);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Busca tareas por filtros
+    @PostMapping("/buscar-tareas")
+    public ResponseEntity<List<NotaEntity>> buscarTareas(@RequestBody Map<String, Object> body) {
+        try {
+            // Obtener los valores del cuerpo de la solicitud con valores predeterminados
+            Boolean completaCheckNota = body.containsKey("completa_check_nota") ? (Boolean) body.get("completa_check_nota") : null;
+            String nombreNota = (String) body.getOrDefault("nombre_nota", "");
+            String contenidoNota = (String) body.getOrDefault("contenido_nota", "");
+            Integer idUsuario = (Integer) body.getOrDefault("id_usuario", null);
+
+            // Validar el parámetro idUsuario
+            if (idUsuario == null) {
+                return ResponseEntity.badRequest().body(null);
+            }
+
+            System.out.println("completaCheckNota: " + completaCheckNota);
+            System.out.println("nombreNota: " + nombreNota);
+            System.out.println("contenidoNota: " + contenidoNota);
+            System.out.println("idUsuario: " + idUsuario);
+
+            // Llamar al servicio
+            List<NotaEntity> notas = notaService.buscarTareas(completaCheckNota, nombreNota, contenidoNota, idUsuario);
             return ResponseEntity.ok(notas);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
