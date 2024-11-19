@@ -2,6 +2,7 @@
 docker-compose.yml
 Dockerfile
 data/
+.env/
 servers.json/
 # intelij
 .idea/
