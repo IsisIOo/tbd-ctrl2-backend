@@ -84,5 +84,17 @@ public class NotaController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+
+    // Devuelve todas las notas de un cliente
+    @GetMapping("/notas-usuario/{id}")
+    public ResponseEntity<List<NotaEntity>> getNotasByCliente(@PathVariable Integer id) {
+        try {
+            List<NotaEntity> notas = notaService.findByIdUsuario(id);
+            return ResponseEntity.ok(notas);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
 
