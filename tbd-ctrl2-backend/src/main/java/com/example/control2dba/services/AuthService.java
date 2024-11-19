@@ -10,11 +10,13 @@ import com.example.control2dba.dtos.TokenResponseDTO;
 public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtUtil;
+    private final UsuarioService usuarioService;
 
     @Autowired
-    public AuthService(AuthenticationManager authenticationManager, JwtService jwtUtil) {
+    public AuthService(AuthenticationManager authenticationManager, JwtService jwtUtil, UsuarioService usuarioService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        this.usuarioService = usuarioService;
     }
 
     public TokenResponseDTO authenticate(String username, String password) {
@@ -25,9 +27,10 @@ public class AuthService {
                 )
         );
 
+        Integer idUsuario = usuarioService.getUsuarioByEmail(username).getId_usuario();
         String jwtToken = jwtUtil.generateToken(username);
         String jwtRefreshToken = jwtUtil.generateRefreshToken(username);
-        return new TokenResponseDTO(jwtToken, jwtRefreshToken);
+        return new TokenResponseDTO(jwtToken, jwtRefreshToken, idUsuario);
 
     }
 }

@@ -22,4 +22,6 @@ public interface NotaRepositoryInt {
 
     // Método para actualizar una categoría
     boolean updateNota(NotaEntity nota);
+
+    List<NotaEntity> buscarPorFiltros(Boolean check, String nombre, String contenido, Integer id_usuario);
 }

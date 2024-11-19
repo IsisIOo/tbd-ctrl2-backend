@@ -53,4 +53,8 @@ public class UsuarioService {
         return false;
     }
 
+    public UsuarioEntity getUsuarioByEmail(String email) {
+        return usuarioRepository.getUsuarioEmail(email);
+    }
+
 }

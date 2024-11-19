@@ -103,4 +103,23 @@ public class NotaRepository implements NotaRepositoryInt {
             return false;
         }
     }
+
+    public List<NotaEntity> buscarPorFiltros(Boolean check, String nombre, String contenido, Integer id_usuario) {
+        String sql = "SELECT * FROM nota n WHERE " +
+                "n.id_usuario = :id_usuario AND " +
+                "(:estado IS NULL OR n.completa_check_nota IS DISTINCT FROM :estado) AND " +
+                "(LOWER(n.nombre_nota) LIKE LOWER(CONCAT('%', :titulo, '%')) OR " +
+                "LOWER(n.contenido_nota) LIKE LOWER(CONCAT('%', :contenido, '%')))";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(sql)
+                    .addParameter("estado", check)
+                    .addParameter("id_usuario", id_usuario) // idCategoria ahora es un int en la entidad
+                    .addParameter("titulo", nombre)
+                    .addParameter("contenido", contenido)
+                    .executeAndFetch(NotaEntity.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
